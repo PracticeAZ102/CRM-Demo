@@ -35,9 +35,9 @@ COPY backend/app ./app
 # Copy Compiled Frontend Static Assets from Stage 1 into /app/frontend/dist
 COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
 
-# Expose port (Azure Container Apps defaults to 8000 or custom)
+# Expose default port
 EXPOSE 8000
 
-# Run FastAPI with Uvicorn
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Run FastAPI with Uvicorn (binds dynamically to $PORT provided by Render/Cloud, fallback 8000)
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
 

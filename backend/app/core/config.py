@@ -2,7 +2,11 @@ import os
 from pydantic_settings import BaseSettings
 from typing import Optional
 
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+if os.path.exists("/app") and os.path.isdir("/app"):
+    BASE_DIR = "/app"
+else:
+    BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+
 DEFAULT_DB_FILE = os.path.join(BASE_DIR, "atcorp_crm.db").replace("\\", "/")
 
 class Settings(BaseSettings):
