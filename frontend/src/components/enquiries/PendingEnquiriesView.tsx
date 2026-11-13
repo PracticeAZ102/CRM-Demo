@@ -187,7 +187,7 @@ export const PendingEnquiriesView = ({ onOpenCpq, onNewCard }: PendingEnquiriesV
                         className="mr-2 px-3 py-1 bg-white text-slate-700 border border-[#cbd5e1] hover:bg-slate-50 rounded-md text-xs font-bold transition inline-flex items-center gap-1 shadow-xs"
                       >
                         <Sparkles size={13} className="text-[#2986cc]" />
-                        <span>Brief</span>
+                        <span>Deal Brief</span>
                       </button>
                       <button
                         onClick={() => onOpenCpq(enq.id)}
