@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Search, RotateCcw, ArrowUpRight, Plus, MapPin, User, Building } from 'lucide-react';
+import { Search, RotateCcw, ArrowUpRight, Plus, MapPin, User, Building, Sparkles } from 'lucide-react';
 import type { Enquiry } from '../../types/enquiry';
 import { api } from '../../services/api';
+import { DealBriefModal } from './DealBriefModal';
 
 interface PendingEnquiriesViewProps {
   onOpenCpq: (enquiryId: string) => void;
@@ -14,6 +15,7 @@ export const PendingEnquiriesView = ({ onOpenCpq, onNewCard }: PendingEnquiriesV
   const [status, setStatus] = useState('');
   const [branch, setBranch] = useState('');
   const [loading, setLoading] = useState(true);
+  const [briefEnquiry, setBriefEnquiry] = useState<Enquiry | null>(null);
 
   const loadData = async () => {
     setLoading(true);
@@ -180,6 +182,14 @@ export const PendingEnquiriesView = ({ onOpenCpq, onNewCard }: PendingEnquiriesV
                     </td>
                     <td className="py-3 px-3 text-center whitespace-nowrap">
                       <button
+                        onClick={() => setBriefEnquiry(enq)}
+                        title="Summarize this deal with on-device AI"
+                        className="mr-2 px-3 py-1 bg-white text-slate-700 border border-[#cbd5e1] hover:bg-slate-50 rounded-md text-xs font-bold transition inline-flex items-center gap-1 shadow-xs"
+                      >
+                        <Sparkles size={13} className="text-[#2986cc]" />
+                        <span>Brief</span>
+                      </button>
+                      <button
                         onClick={() => onOpenCpq(enq.id)}
                         className="px-3 py-1 bg-white text-[#2986cc] border border-[#2986cc] hover:bg-[#2986cc]/10 rounded-md text-xs font-bold transition inline-flex items-center gap-1 shadow-xs"
                       >
@@ -194,7 +204,8 @@ export const PendingEnquiriesView = ({ onOpenCpq, onNewCard }: PendingEnquiriesV
           </div>
         )}
       </div>
+
+      <DealBriefModal enquiry={briefEnquiry} onClose={() => setBriefEnquiry(null)} />
     </div>
   );
 };
-
